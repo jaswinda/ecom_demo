@@ -1,8 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:my_first_flutter_project/utils/shared_preds.dart';
+import 'package:my_first_flutter_project/views/pages/loader.dart';
 import 'package:my_first_flutter_project/views/pages/tabs/tab_one.dart';
 import 'package:tabnavigator/tabnavigator.dart';
+
+import '../../controller/authentication_controller.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
@@ -16,6 +21,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _tabController = StreamController<AppTab>.broadcast();
   final _initTab = AppTab.feed;
+  final AuthService authService = AuthService();
 
   Stream<AppTab> get tabStream => _tabController.stream;
 
@@ -29,8 +35,17 @@ class _MyHomePageState extends State<MyHomePage> {
       );
     },
     AppTab.info: () {
+      final authentication = Get.find<Authentication>();
       return Column(
-        children: const [],
+        children: [
+          Container(
+              child: ElevatedButton(
+                  onPressed: () async {
+                    await authentication.logout();
+                    Get.offAll(const Loader());
+                  },
+                  child: const Text("Logout"))),
+        ],
       );
     }
   };
@@ -42,6 +57,8 @@ class _MyHomePageState extends State<MyHomePage> {
       mappedTabs: _map,
     );
   }
+
+  logout() async {}
 
   Widget _buildbottomNavigationBar() {
     return StreamBuilder<AppTab>(
