@@ -16,10 +16,10 @@ class MyButton extends StatelessWidget {
             color: Colors.black,
           ),
           width: double.infinity,
-          child: const Center(
+          child: Center(
             child: Padding(
-              padding: EdgeInsets.all(10),
-              child: Text("Submit", style: TextStyle(color: Colors.white)),
+              padding: const EdgeInsets.all(10),
+              child: Text(text, style: const TextStyle(color: Colors.white)),
             ),
           )),
     );

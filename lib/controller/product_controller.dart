@@ -30,9 +30,6 @@ class ProductController extends GetxController {
         products.value = (jsonResponse["data"] as List)
             .map((e) => Product.fromJson(e))
             .toList();
-
-        print(products.value);
-        showMessage(message: jsonResponse["message"]);
       } else {
         showMessage(message: jsonResponse["message"], isSuccess: false);
       }

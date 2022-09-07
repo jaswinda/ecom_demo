@@ -30,9 +30,6 @@ class CategroyController extends GetxController {
         categories.value = (jsonResponse["data"] as List)
             .map((e) => Category.fromJson(e))
             .toList();
-
-        print(categories.value);
-        showMessage(message: jsonResponse["message"]);
       } else {
         showMessage(message: jsonResponse["message"], isSuccess: false);
       }
