@@ -1,13 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:my_first_flutter_project/controller/cart_controller.dart';
+import 'package:my_first_flutter_project/controller/order_controller.dart';
 import 'package:my_first_flutter_project/utils/api.dart';
 import 'package:my_first_flutter_project/views/components/add_to_cart_bottomsheet.dart';
 import 'package:my_first_flutter_project/views/components/my_button.dart';
 
 class CartPage extends StatelessWidget {
   final CartController cartController = Get.find<CartController>();
+  final OrderController orderController = Get.put(OrderController());
   CartPage({Key? key}) : super(key: key);
 
   @override
@@ -27,7 +31,22 @@ class CartPage extends StatelessWidget {
             ),
             Container(
                 child: Obx(() => MyButton(
-                    onTap: () {}, text: "Checkout ${cartController.total}"))),
+                    onTap: () {
+                      var data = {
+                        "total": 200.toString(),
+                        "order_items": jsonEncode(cartController.cart.values
+                            .map((e) => jsonEncode({
+                                  "product_id": e.id,
+                                  "quantity": e.quantity,
+                                  "price": e.price,
+                                  "name": e.description,
+                                  "description": e.description
+                                }))
+                            .toList())
+                      };
+                      orderController.place(data);
+                    },
+                    text: "Checkout ${cartController.total}"))),
           ],
         ),
       ),

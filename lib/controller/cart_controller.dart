@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:my_first_flutter_project/model/product.dart';
@@ -38,6 +37,13 @@ class CartController extends GetxController {
     cart.remove(product.id);
     storage.setItem("cart", jsonEncode(cart));
     getTotal();
+  }
+
+  clearCart() {
+    cart.value = {};
+    storage.setItem("cart", jsonEncode(cart));
+    getTotal();
+    update();
   }
 
   getTotal() {

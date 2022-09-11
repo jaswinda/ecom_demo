@@ -9,6 +9,8 @@ import 'package:my_first_flutter_project/utils/shared_preds.dart';
 class CategroyController extends GetxController {
   var loading = false.obs;
   var categories = <Category>[].obs;
+  var selectedCategory =
+      Category(id: "", name: "", description: "", image: "").obs;
 
   final AuthService authService = AuthService();
 
